@@ -1,0 +1,43 @@
+name: tharad_tech
+description: "A new Flutter project."
+
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.7
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  flutter_screenutil: null
+  flutter_svg: null
+  dotted_border:
+  dio:
+  flutter_bloc:
+  get_storage:
+  hive_flutter:
+  hive:
+  easy_localization:
+  image_picker:
+  pin_code_fields:
+
+dev_dependencies:
+  build_runner:
+  hive_generator:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/icons/
+    - assets/images/
+    - assets/translations/
+  fonts:
+    - family: Tajawal
+      fonts:
+        - asset: assets/fonts/tajawal_regular.ttf
+    - family: Alexandria
+      fonts:
+        - asset: assets/fonts/alexandria_regular.ttf

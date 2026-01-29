@@ -1,0 +1,41 @@
+class AppStrings {
+  static const loginTitle = 'login_title';
+  static const emailLabel = 'email_label';
+  static const emailHint = 'email_hint';
+  static const passwordLabel = 'password_label';
+  static const passwordHint = 'password_hint';
+  static const forgotPassword = 'forgot_password';
+  static const loginLoading = 'login_loading';
+  static const loginButton = 'login_button';
+  static const noAccount = 'no_account';
+  static const createAccount = 'create_account';
+  static const lang = 'lang';
+  static const rememberMe = 'remember_me';
+  static const registerTitle = 'register_title';
+  static const profileImage = 'profile_image';
+  static const usernameLabel = 'username_label';
+  static const usernameHint = 'username_hint';
+  static const confirmPasswordLabel = 'confirm_password_label';
+  static const confirmPasswordHint = 'confirm_password_hint';
+  static const registerButton = 'register_button';
+  static const haveAccount = 'have_account';
+  static const loginAction = 'login_action';
+  static const allowedFiles = 'allowed_files';
+  static const connectionTimeout = 'connection_timeout';
+  static const sendTimeout = 'send_timeout';
+  static const receiveTimeout = 'receive_timeout';
+  static const serverError = 'server_error';
+  static const requestCancelled = 'request_cancelled';
+  static const noInternet = 'no_internet';
+  static const unexpectedError = 'unexpected_error';
+  static const termsError = 'terms_error';
+  static const otpTitle = 'otp_title';
+  static const otpDescription = 'otp_description';
+  static const timer = 'otp_timer';
+  static const notReceived = 'otp_not_received';
+  static const resend = 'otp_resend';
+  static const continueBtn = 'otp_continue';
+  static const otpIncomplete = 'otp_incomplete';
+  static const otpInvalid = 'otp_invalid';
+
+}
