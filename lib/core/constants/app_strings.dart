@@ -37,5 +37,32 @@ class AppStrings {
   static const continueBtn = 'otp_continue';
   static const otpIncomplete = 'otp_incomplete';
   static const otpInvalid = 'otp_invalid';
+  static const welcomeTitle = 'welcome_title';
+  static const flutterTrainingTitle = 'flutter_training_title';
+  static const aboutTraining = 'about_training';
+  static const flutterTrainingDescription = 'flutter_training_description';
+  static const trainingDependsOn = 'training_depends_on';
+  static const trainingPoint1 = 'training_point_1';
+  static const trainingPoint2 = 'training_point_2';
+  static const trainingPoint3 = 'training_point_3';
+  static const trainingPoint4 = 'training_point_4';
 
+  static const trainingGoal = 'training_goal';
+  static const workNatureTitle = 'work_nature_title';
+  static const workRealApps = 'work_real_apps';
+  static const workFeatures = 'work_features';
+  static const workApis = 'work_apis';
+  static const workBugs = 'work_bugs';
+  static const workCleanArchitecture = 'work_clean_architecture';
+  static const home = 'home';
+  static const myAccount = 'my_account';
+  static const language = 'language';
+  static const arabic = 'arabic';
+  static const english = 'english';
+  static const execute = 'execute';
+  static const profile = 'profile';
+  static const oldPassword = 'oldPassword';
+  static const newPassword = 'newPassword';
+  static const confirmNewPassword = 'confirmNewPassword';
+  static const saveChanges = 'saveChanges';
 }

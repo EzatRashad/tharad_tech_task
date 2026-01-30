@@ -4,11 +4,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tharad_tech/core/constants/api_constants.dart';
-import 'package:tharad_tech/features/home/view/home.dart';
+import 'package:tharad_tech/features/layout/view/layout.dart';
+import 'package:tharad_tech/features/login/view/login.dart';
 import '/core/services/dio_helper.dart';
 import '/core/services/get_storage_helper.dart';
 import '/core/style/app_theme.dart';
-import '/features/login/view/login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
       },
       child: (token == null || token == '')
           ? const LoginView()
-          : const HomeView(),
+          : const LayoutView(),
     );
   }
 }

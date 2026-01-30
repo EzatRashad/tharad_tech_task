@@ -47,6 +47,8 @@ class LoginCubit extends Cubit<LoginState> {
       log(token ?? "nullllllllllllllllllllll");
 
       await CacheHelper.saveData(key: tokenK, value: token);
+      await CacheHelper.saveData(key: nameK, value: userModel.username);
+      await CacheHelper.saveData(key: emailK, value: userModel.email);
 
       emit(LoginSuccess(userModel, response.data['message']));
     } on ApiError catch (error) {

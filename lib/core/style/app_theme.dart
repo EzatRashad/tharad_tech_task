@@ -8,21 +8,6 @@ class AppTheme {
   static ThemeData lightTheme = ThemeData(
     fontFamily: "Tajawal",
 
-    //  primaryColor: ColorsManager.white,
-    // appBarTheme: AppBarTheme(
-    //   backgroundColor: AppColors.white,
-    //   elevation: 0,
-    //   centerTitle: true,
-    //   titleTextStyle: TextStyle(
-    //     fontFamily: "montserrat",
-    //     color: AppColors.black,
-    //     fontSize: 19,
-    //     fontWeight: FontWeight.w700,
-    //   ),
-    //   iconTheme: IconThemeData(
-    //     color: AppColors.primary,
-    //   ),
-    // ),
     textTheme: TextTheme(
       titleLarge: TextStyle(
         color: AppColors.black,
@@ -42,6 +27,14 @@ class AppTheme {
         fontFamily: "Tajawal",
         fontSize: 10.sp,
       ),
+    ),
+    radioTheme: RadioThemeData(
+      fillColor: WidgetStateColor.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
+          return AppColors.primary;
+        }
+        return Colors.grey[400]!;
+      }),
     ),
   );
   //-------------------------------------------------------------------------------------------------

@@ -11,10 +11,10 @@ class AppInput extends StatelessWidget {
     this.obscureText = false,
     this.suffixIcon,
     this.validator,
-    required this.hint,
+      this.hint,
   });
   final String label;
-  final String hint;
+  final String? hint;
   final TextEditingController controller;
   final bool obscureText;
   final Widget? suffixIcon;
@@ -44,12 +44,13 @@ class AppInput extends StatelessWidget {
 
           controller: controller,
           obscureText: obscureText,
+          obscuringCharacter: "*",
           decoration: InputDecoration(
             filled: true,
             fillColor: AppColors.primary.withValues(alpha: 0.03),
             isDense: true,
 
-            hint: Text(hint),
+            hint: hint != null ? Text(hint!) : null,
             suffixIcon: Padding(
               padding: const EdgeInsets.all(12.0),
               child: suffixIcon,

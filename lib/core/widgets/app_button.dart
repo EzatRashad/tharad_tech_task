@@ -24,9 +24,9 @@ class AppButton extends StatelessWidget {
   });
 
   static const LinearGradient defaultGradient = LinearGradient(
-    begin: Alignment(0.00, 0.58),
-    end: Alignment(1.00, 0.57),
-    colors: [Color(0xFF54B7BB), Color(0xFF265355)],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+    colors: [Color(0xff54B7BB), Color(0xff265355)],
   );
 
   @override

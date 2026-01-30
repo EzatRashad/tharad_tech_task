@@ -7,3 +7,6 @@ const updateProfileEndpoint = "Update-Profile";
 const profileDetailsEndpoint = 'profile-details';
 const homeEndpoint = "home";
 const tokenK = "tokenK";
+const nameK = "nameK";
+const emailK = "emailK";
+const imageK = "imageK";

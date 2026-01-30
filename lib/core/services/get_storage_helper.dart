@@ -26,12 +26,4 @@ class CacheHelper {
   static Future<void> clear() async {
     await _box.erase();
   }
-
-  static Future<void> saveThemeMode(String mode) async {
-    await saveData(key: 'theme_mode', value: mode);
-  }
-
-  static String? getThemeMode() {
-    return getData<String>(key: 'theme_mode');
-  }
 }

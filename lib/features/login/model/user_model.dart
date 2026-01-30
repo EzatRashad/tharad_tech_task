@@ -17,4 +17,19 @@ class UserModel {
     );
   }
 
+  Map<String, dynamic> toMap() {
+    return {
+      'token': token,
+      'username': username,
+      'email': email,
+    };
+  }
+
+  factory UserModel.fromMap(Map<String, dynamic> map) {
+    return UserModel(
+      token: map['token'] ?? '',
+      username: map['username'] ?? '',
+      email: map['email'] ?? '',
+    );
+  }
 }

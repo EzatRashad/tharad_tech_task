@@ -2,7 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tharad_tech/features/home/view/home.dart';
+import 'package:tharad_tech/core/functions/lang_btn.dart';
+import 'package:tharad_tech/features/layout/view/layout.dart';
+import 'package:tharad_tech/features/register/view/register.dart';
 import '/core/constants/app_strings.dart';
 import '/core/style/app_colors.dart';
 import '/core/utils/navigate.dart';
@@ -14,7 +16,6 @@ import '/core/widgets/register_or_login.dart';
 import '/core/widgets/terms_and_conditions.dart';
 import '/features/login/cubit/login_cubit.dart';
 import '/features/login/cubit/login_state.dart';
-import '/features/register/view/register.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -45,7 +46,7 @@ class _LoginViewState extends State<LoginView> {
           }
           if (state is LoginSuccess) {
             context.showSnackBar(state.message);
-            context.nextScreen(const HomeView(), remove: true);
+            context.nextScreen(const LayoutView(), remove: true);
           }
         },
         builder: (context, state) {
@@ -59,33 +60,21 @@ class _LoginViewState extends State<LoginView> {
                   children: [
                     80.ph,
 
-                    GestureDetector(
-                      onTap: () {
-                        if (context.locale.languageCode == 'en') {
-                          context.setLocale(const Locale('ar'));
-                        } else {
-                          context.setLocale(const Locale('en'));
-                        }
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AppImageWidget(
-                            imageName: "global.svg",
-                            fit: BoxFit.scaleDown,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () => LangBtn.show(context),
+                          child: Row(
+                            children: [
+                              AppImageWidget(imageName: "global.svg"),
+                              4.pw,
+                              Text(AppStrings.lang.tr()),
+                            ],
                           ),
-
-                          4.pw,
-                          Text(
-                            AppStrings.lang.tr(),
-                            style: theme.titleSmall!.copyWith(
-                              fontSize: 16.sp,
-                              color: AppColors.black,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
 
                     100.ph,
@@ -165,7 +154,7 @@ class _LoginViewState extends State<LoginView> {
                       normalText: AppStrings.noAccount.tr(),
                       actionText: AppStrings.createAccount.tr(),
                       onTap: () =>
-                          context.nextScreen(const HomeView(), remove: true),
+                          context.nextScreen(const Register()),
                     ),
                   ],
                 ),

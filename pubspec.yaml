@@ -12,19 +12,16 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_screenutil: null
   flutter_svg: null
+  cached_network_image:
   dotted_border:
   dio:
   flutter_bloc:
   get_storage:
-  hive_flutter:
-  hive:
   easy_localization:
   image_picker:
   pin_code_fields:
 
 dev_dependencies:
-  build_runner:
-  hive_generator:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0

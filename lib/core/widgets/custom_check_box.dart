@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import '/core/style/app_colors.dart';
-import '/core/widgets/app_image_widget.dart';
 
 class CustomCheckBox extends StatelessWidget {
   const CustomCheckBox({

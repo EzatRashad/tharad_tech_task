@@ -1,9 +1,22 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tharad_tech/core/constants/api_constants.dart';
+import 'package:tharad_tech/core/constants/app_strings.dart';
+import 'package:tharad_tech/core/functions/lang_btn.dart';
+import 'package:tharad_tech/core/services/get_storage_helper.dart';
+import 'package:tharad_tech/core/style/app_colors.dart';
+import 'package:tharad_tech/core/utils/validatio.dart';
+import 'package:tharad_tech/core/widgets/app_pick_image.dart';
+import 'package:tharad_tech/core/widgets/my_scaffold.dart';
+import 'package:tharad_tech/features/profile/cubit/profile_cubit.dart';
+import 'package:tharad_tech/features/profile/cubit/profile_stste.dart';
 import '/core/utils/utils.dart';
 import '/core/widgets/app_input.dart';
 import '/core/widgets/app_image_widget.dart';
 import '/core/widgets/app_button.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -13,187 +26,226 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final name_controller = TextEditingController();
+  final nameController = TextEditingController();
 
-  final email_controller = TextEditingController();
+  final emailController = TextEditingController();
 
-  final password_controller = TextEditingController();
-
-  final confirm_password_controller = TextEditingController();
+  final passwordController = TextEditingController();
+  final newPasswordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    newPasswordController.dispose();
+    confirmPasswordController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).textTheme;
+    return BlocProvider(
+      create: (context) => ProfileCubit()..getProfile(),
+      child: BlocConsumer<ProfileCubit, ProfileState>(
+        listener: (BuildContext context, ProfileState state) {
+          if (state is UpdateProfileError) {
+            context.showSnackBar(state.error, backgroundColor: Colors.red);
+          }
+          if (state is UpdateProfileSuccess) {
+            context.showSnackBar(state.message);
+          }
+        },
+        builder: (context, state) {
+          final cubit = ProfileCubit.get(context);
 
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: Text(''),
-        elevation: 0,
-        title: Text(
-          'الملف الشخصي',
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(
-            color: Colors.white,
-            fontSize: 16.sp,
-          ),
-        ),
-        centerTitle: true,
-        actions: [
-          GestureDetector(
-            onTap: () => Navigator.pop(context),
-            child: CircleAvatar(
-              backgroundColor: const Color(0xff101010).withOpacity(0.1),
-              child: AppImageWidget(imageName: "notification.svg"),
-            ),
-          ),
-        ],
-        actionsPadding: EdgeInsets.symmetric(horizontal: 20.w),
-      ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        padding: EdgeInsets.only(top: kToolbarHeight + 20.h),
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment(0.00, 0.58),
-            end: Alignment(1.00, 0.57),
-            colors: [Color(0xFF5CC7A3), Color(0xFF265355)],
-          ),
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              28.ph,
-              SizedBox(
-                height: MediaQuery.of(context).size.height,
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(24.r),
-                      topRight: Radius.circular(24.r),
-                    ),
-                  ),
-                  child: Form(
-                    key: _formKey,
-                    child: ListView(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
+          if (state is GetProfileLoading) {
+            return const Center(
+              child: CircularProgressIndicator(color: AppColors.primary),
+            );
+          }
+          if (state is GetProfileError) {
+            return Center(child: Text(state.error));
+          }
+          if (state is GetProfileSuccess) {
+            nameController.text = state.model.username;
+            emailController.text = state.model.email;
+          }
+          return MyScaffold(
+            title: AppStrings.profile.tr(),
+            body: Form(
+              key: _formKey,
+              child: ListView(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
 
-                      children: [
-                        Column(
+                children: [
+                  Column(
+                    children: [
+                      32.ph,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () => LangBtn.show(context),
+                            child: Row(
+                              children: [
+                                AppImageWidget(imageName: "global.svg"),
+                                4.pw,
+                                Text(AppStrings.lang.tr()),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      8.ph,
+                      AppInput(
+                        label: AppStrings.usernameLabel.tr(),
+                        controller: nameController,
+                        validator: (value) => Validation.validateName(value),
+                      ),
+
+                      12.ph,
+                      AppInput(
+                        label: AppStrings.emailLabel.tr(),
+                        controller: emailController,
+                        validator: (value) => Validation.validateEmail(value),
+                      ),
+
+                      12.ph,
+                      Align(
+                        alignment: AlignmentDirectional.centerStart,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            32.ph,
-                            AppInput(
-                              label: "اسم المستخدم",
-                              hint: "أدخل اسم المستخدم",
-                              controller: name_controller,
+                            Text(
+                              AppStrings.profileImage.tr(),
+                              style: Theme.of(context).textTheme.titleSmall!
+                                  .copyWith(fontWeight: FontWeight.w500),
                             ),
-
-                            12.ph,
-                            AppInput(
-                              label: "البريد الإلكتروني",
-                              hint: "أدخل البريد الإلكتروني",
-                              controller: email_controller,
-                            ),
-
-                            12.ph,
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "الصورة الشخصية",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall!
-                                        .copyWith(fontWeight: FontWeight.w500),
-                                  ),
-                                  6.ph,
-                                  Stack(
+                            6.ph,
+                            cubit.selectNewImage
+                                ? AppPickImage(
+                                    onImagePicked: (image) =>
+                                        cubit.pickImage(image),
+                                  )
+                                : Stack(
                                     children: [
-                                      AppImageWidget(imageName: "uploaded.png"),
+                                      cubit.profileImage != null
+                                          ? Image.file(
+                                              cubit.profileImage!,
+                                              height: 100,
+                                            )
+                                          : CachedNetworkImage(
+                                              imageUrl:
+                                                  CacheHelper.getData<String>(
+                                                    key: imageK,
+                                                  ) ??
+                                                  "",
+                                              width: 100.w,
+                                              height: 100.h,
+                                              fit: BoxFit.cover,
+                                              placeholder: (context, url) =>
+                                                  const CircularProgressIndicator(),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      const Icon(Icons.error),
+                                            ),
                                       Positioned(
                                         top: 8,
                                         left: 8,
-                                        child: AppImageWidget(
-                                          imageName: "uploaded_camera.svg",
+                                        child: GestureDetector(
+                                          onTap: cubit.toggleSelectNewImage,
+                                          child: AppImageWidget(
+                                            imageName: "uploaded_camera.svg",
+                                          ),
                                         ),
                                       ),
                                     ],
                                   ),
-                                ],
-                              ),
-                            ),
-
-                            12.ph,
-                            AppInput(
-                              label: "كلمة المرور القديمة",
-                              hint: "أدخل كلمة المرور",
-                              controller: password_controller,
-                              obscureText: true,
-                              suffixIcon: AppImageWidget(
-                                imageName: "eye_off.svg",
-                                fit: BoxFit.scaleDown,
-                              ),
-                            ),
-                            12.ph,
-                            AppInput(
-                              label: "كلمة المرور الجديدة",
-                              hint: "أدخل كلمة المرور",
-                              controller: password_controller,
-                              obscureText: true,
-                              suffixIcon: AppImageWidget(
-                                imageName: "eye_off.svg",
-                                fit: BoxFit.scaleDown,
-                              ),
-                            ),
-                            12.ph,
-                            AppInput(
-                              label: "تأكيد كلمة المرور الجديدة",
-                              hint: "أدخل كلمة المرور",
-                              controller: password_controller,
-                              obscureText: true,
-                              suffixIcon: AppImageWidget(
-                                imageName: "eye_off.svg",
-                                fit: BoxFit.scaleDown,
-                              ),
-                            ),
-                            40.ph,
-
-                            AppButton(
-                              width: 234.w,
-                              title: "حفظ التغييرات",
-                              onTap: () {},
-                              gradient: const LinearGradient(
-                                begin: Alignment(0.00, 0.58),
-                                end: Alignment(1.00, 0.57),
-                                colors: [Color(0xFF5CC7A3), Color(0xFF265355)],
-                              ),
-                            ),
-                            12.ph,
-                            Text(
-                              "تسجيل الخروج",
-                              style: theme.titleMedium!.copyWith(
-                                decoration: TextDecoration.underline,
-                                decorationColor: Colors.red,
-                                color: Colors.red,
-                              ),
-                            ),
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+
+                      12.ph,
+                      AppInput(
+                        label: AppStrings.oldPassword.tr(),
+                        controller: passwordController,
+                        obscureText: cubit.isPasswordVisible1,
+                        suffixIcon: GestureDetector(
+                          onTap: cubit.togglePasswordVisibility1,
+                          child: AppImageWidget(
+                            imageName: cubit.isPasswordVisible1
+                                ? "visibily_off.svg"
+                                : "visiblily.svg",
+                          ),
+                        ),
+                      ),
+                      12.ph,
+                      AppInput(
+                        label: AppStrings.newPassword.tr(),
+                        controller: newPasswordController,
+                        validator: (value) =>
+                            Validation.validatePassword(value),
+
+                        obscureText: cubit.isPasswordVisible2,
+                        suffixIcon: GestureDetector(
+                          onTap: cubit.togglePasswordVisibility2,
+                          child: AppImageWidget(
+                            imageName: cubit.isPasswordVisible2
+                                ? "visibily_off.svg"
+                                : "visiblily.svg",
+                          ),
+                        ),
+                      ),
+                      12.ph,
+                      AppInput(
+                        label: AppStrings.confirmNewPassword.tr(),
+                        validator: (value) =>
+                            Validation.validateConfirmPassword(
+                              value,
+                              newPasswordController.text,
+                            ),
+                        controller: confirmPasswordController,
+                        obscureText: cubit.isPasswordVisible3,
+                        suffixIcon: GestureDetector(
+                          onTap: cubit.togglePasswordVisibility3,
+                          child: AppImageWidget(
+                            imageName: cubit.isPasswordVisible3
+                                ? "visibily_off.svg"
+                                : "visiblily.svg",
+                          ),
+                        ),
+                      ),
+                      40.ph,
+
+                      state is UpdateProfileLoading
+                          ? CircularProgressIndicator(color: AppColors.primary)
+                          : AppButton(
+                              width: 234.w,
+                              title: AppStrings.saveChanges.tr(),
+                              onTap: () {
+                                if (_formKey.currentState!.validate()) {
+                                  cubit.updateProfile(
+                                    username: nameController.text,
+                                    email: emailController.text,
+                                    password: passwordController.text,
+                                    newPassword: newPasswordController.text,
+                                    newPasswordConfirmation:
+                                        confirmPasswordController.text,
+                                  );
+                                }
+                              },
+                            ),
+                    ],
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
