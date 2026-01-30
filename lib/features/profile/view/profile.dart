@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tharad_tech/core/constants/api_constants.dart';
 import 'package:tharad_tech/core/constants/app_strings.dart';
 import 'package:tharad_tech/core/functions/lang_btn.dart';
@@ -55,7 +56,17 @@ class _ProfileState extends State<Profile> {
             context.showSnackBar(state.error, backgroundColor: Colors.red);
           }
           if (state is UpdateProfileSuccess) {
-            context.showSnackBar(state.message);
+            Fluttertoast.showToast(
+              msg: state.message,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.TOP,
+              backgroundColor: Colors.green,
+              textColor: Colors.white,
+              fontSize: 16.0.sp,
+            );
+            passwordController.clear();
+            newPasswordController.clear();
+            confirmPasswordController.clear();
           }
         },
         builder: (context, state) {
@@ -131,28 +142,29 @@ class _ProfileState extends State<Profile> {
                                     onImagePicked: (image) =>
                                         cubit.pickImage(image),
                                   )
+                                : cubit.profileImage != null
+                                ? Image.file(cubit.profileImage!, height: 100)
                                 : Stack(
                                     children: [
-                                      cubit.profileImage != null
-                                          ? Image.file(
-                                              cubit.profileImage!,
-                                              height: 100,
-                                            )
-                                          : CachedNetworkImage(
-                                              imageUrl:
-                                                  CacheHelper.getData<String>(
-                                                    key: imageK,
-                                                  ) ??
-                                                  "",
-                                              width: 100.w,
-                                              height: 100.h,
-                                              fit: BoxFit.cover,
-                                              placeholder: (context, url) =>
-                                                  const CircularProgressIndicator(),
-                                              errorWidget:
-                                                  (context, url, error) =>
-                                                      const Icon(Icons.error),
-                                            ),
+                                      CachedNetworkImage(
+                                        imageUrl:
+                                            CacheHelper.getData<String>(
+                                              key: imageK,
+                                            ) ??
+                                            "",
+                                        width: 100.w,
+                                        height: 100.h,
+                                        fit: BoxFit.cover,
+                                        placeholder: (context, url) => Padding(
+                                          padding: const EdgeInsets.all(18.0),
+                                          child: Center(
+                                            child:
+                                                const CircularProgressIndicator(),
+                                          ),
+                                        ),
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(Icons.error),
+                                      ),
                                       Positioned(
                                         top: 8,
                                         left: 8,

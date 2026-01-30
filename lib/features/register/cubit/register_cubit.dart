@@ -43,7 +43,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     try {
       final formData = FormData.fromMap({
         "email": email,
-        "username": username.trim(),
+        "username": username.trim().replaceAll(' ', ''),
         "password": password,
         "password_confirmation": passwordConfirmation,
         if (profileImage != null)

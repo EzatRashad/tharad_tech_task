@@ -41,6 +41,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   void pickImage(File image) {
     profileImage = image;
+    toggleSelectNewImage();
     emit(RegisterImagePicked());
   }
 
@@ -53,7 +54,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       CacheHelper.saveData(key: nameK, value: profile.username);
       CacheHelper.saveData(key: emailK, value: profile.email);
       CacheHelper.saveData(key: imageK, value: profile.image);
-
+      profileImage = null;
       selectNewImage = false;
       emit(GetProfileSuccess(profile));
     } on ApiError catch (error) {

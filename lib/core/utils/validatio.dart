@@ -1,35 +1,36 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:tharad_tech/core/constants/app_strings.dart';
+
 class Validation {
   static String? validateName(String? value, {int minLength = 6}) {
     if (value == null || value.isEmpty) {
-      return 'Name cannot be empty';
+      return AppStrings.nameEmpty.tr();
     } else if (value.length < minLength) {
-      return 'Name must be at least $minLength characters long';
+      return AppStrings.nameMinLength.tr(args: [minLength.toString()]);
     }
     return null;
   }
 
   static String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Email cannot be empty';
+      return AppStrings.emailEmpty.tr();
     }
-    final RegExp emailRegExp = RegExp(
+    final emailRegExp = RegExp(
       r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
     );
     if (!emailRegExp.hasMatch(value)) {
-      return 'Enter a valid email';
+      return AppStrings.emailInvalid.tr();
     }
     return null;
   }
 
   static String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Password cannot be empty';
+      return AppStrings.passwordEmpty.tr();
     }
-    final RegExp passwordRegExp = RegExp(
-      r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8,}$',
-    );
+    final passwordRegExp = RegExp(r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8,}$');
     if (!passwordRegExp.hasMatch(value)) {
-      return 'Password must be at least 8 characters, include an uppercase letter and a number';
+      return AppStrings.passwordInvalid.tr();
     }
     return null;
   }
@@ -39,18 +40,18 @@ class Validation {
     String? confirmPassword,
   ) {
     if (confirmPassword == null || confirmPassword.isEmpty) {
-      return 'Confirm password cannot be empty';
+      return AppStrings.confirmPasswordEmpty.tr();
     } else if (password != confirmPassword) {
-      return 'Passwords do not match';
+      return AppStrings.passwordNotMatch.tr();
     }
     return null;
   }
 
   static String? validatePhone(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Phone number cannot be empty';
+      return AppStrings.phoneEmpty.tr();
     } else if (!RegExp(r'^\d{10,15}$').hasMatch(value)) {
-      return 'Enter a valid phone number';
+      return AppStrings.phoneInvalid.tr();
     }
     return null;
   }

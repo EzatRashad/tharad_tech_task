@@ -65,4 +65,18 @@ class AppStrings {
   static const newPassword = 'newPassword';
   static const confirmNewPassword = 'confirmNewPassword';
   static const saveChanges = 'saveChanges';
+  static const nameEmpty = 'name_empty';
+  static const nameMinLength = 'name_min_length';
+
+  static const emailEmpty = 'email_empty';
+  static const emailInvalid = 'email_invalid';
+
+  static const passwordEmpty = 'password_empty';
+  static const passwordInvalid = 'password_invalid';
+
+  static const confirmPasswordEmpty = 'confirm_password_empty';
+  static const passwordNotMatch = 'password_not_match';
+
+  static const phoneEmpty = 'phone_empty';
+  static const phoneInvalid = 'phone_invalid';
 }

@@ -63,5 +63,19 @@
   "oldPassword": "Old Password",
   "newPassword": "New Password",
   "confirmNewPassword": "Confirm New Password",
-  "saveChanges": "Save Changes"
+  "saveChanges": "Save Changes",
+  "name_empty": "Name cannot be empty",
+  "name_min_length": "Name must be at least 8 characters long",
+
+  "email_empty": "Email cannot be empty",
+  "email_invalid": "Enter a valid email",
+
+  "password_empty": "Password cannot be empty",
+  "password_invalid": "Password must be at least 8 characters, include an uppercase letter and a number",
+
+  "confirm_password_empty": "Confirm password cannot be empty",
+  "password_not_match": "Passwords do not match",
+
+  "phone_empty": "Phone number cannot be empty",
+  "phone_invalid": "Enter a valid phone number"
 }

@@ -15,11 +15,13 @@ dependencies:
   cached_network_image:
   dotted_border:
   dio:
+  fluttertoast:
   flutter_bloc:
   get_storage:
   easy_localization:
   image_picker:
   pin_code_fields:
+  
 
 dev_dependencies:
   flutter_test:
