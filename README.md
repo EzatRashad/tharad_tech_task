@@ -32,7 +32,6 @@ The app demonstrates authentication, profile management, local caching, offline 
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/dc516dcc-ab14-4c53-ab7f-5d22a6b9324e" width="250" />
-  <img src="https://github.com/user-attachments/assets/3c9feda5-7631-4ba0-bb6b-e4a286c3238d" width="250" />
   <img src="https://github.com/user-attachments/assets/eec70d8c-917e-42e5-bac8-babed401878a" width="250" />
 </p>
 ---
